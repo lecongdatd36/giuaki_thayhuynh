@@ -1,0 +1,33 @@
+{
+  "name": "qlhdsv_backend",
+  "version": "1.0.0",
+  "description": "Backend quản lý và điểm danh sinh viên tham gia hoạt động tại Khoa CNTT",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "postgresql",
+    "attendance",
+    "student",
+    "backend"
+  ],
+  "author": "Lê Công Đạt - 1150080130",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.11",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
