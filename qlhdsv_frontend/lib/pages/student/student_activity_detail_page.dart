@@ -37,6 +37,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
     }
   }
 
+  /// 🕒 Định dạng ngày giờ
   String formatDateTime(String? dateTimeStr) {
     if (dateTimeStr == null || dateTimeStr.isEmpty) return "-";
     try {
@@ -71,7 +72,6 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
       SnackBar(content: Text(res["message"] ?? "Lỗi không xác định")),
     );
 
-    // ✅ Cập nhật lại điều kiện để nhận cả trường hợp đã đăng ký
     final msg = res["message"]?.toLowerCase() ?? "";
     if (msg.contains("thành công") || msg.contains("đã đăng ký")) {
       setState(() => isRegistered = true);
@@ -96,6 +96,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
     }
   }
 
+  /// 🧭 Xác định trạng thái hoạt động (chưa diễn ra / đang diễn ra / đã kết thúc)
   String getActivityStatus() {
     try {
       final now = DateTime.now();
@@ -119,9 +120,8 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
       if (startTime != null &&
           endTime != null &&
           now.isAfter(startTime) &&
-          now.isBefore(endTime)) {
+          now.isBefore(endTime))
         return "ongoing";
-      }
       return "upcoming";
     } catch (e) {
       return "upcoming";
@@ -159,7 +159,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // 🔹 Mô tả
+                    // 🔹 Các thẻ thông tin
                     _buildInfoCard(
                       icon: Icons.description,
                       iconColor: Colors.indigo,
@@ -215,7 +215,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
     );
   }
 
-  /// 🔹 Widget thẻ thông tin
+ 
   Widget _buildInfoCard({
     required IconData icon,
     required Color iconColor,
@@ -269,10 +269,14 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
     );
   }
 
-  /// 🔹 Nút hoặc thông báo trạng thái
+  /// 🔘 Nút hoặc thông báo trạng thái
   Widget _buildStatusButton(String status) {
     if (status == "ended") {
       return _statusContainer("Hoạt động đã kết thúc", Colors.grey);
+    }
+
+    if (status == "ongoing") {
+      return _statusContainer(" Hoạt động đang diễn ra", Colors.blueAccent);
     }
 
     if (isAttended) {
@@ -283,6 +287,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
       return _statusContainer("Chờ giảng viên điểm danh", Colors.orange);
     }
 
+    // chỉ khi chưa đăng ký và hoạt động chưa diễn ra
     return ElevatedButton.icon(
       onPressed: loading ? null : registerActivity,
       icon: const Icon(Icons.check_circle, color: Colors.white),
@@ -295,7 +300,7 @@ class _StudentActivityDetailPageState extends State<StudentActivityDetailPage> {
     );
   }
 
-  /// 🔹 Container hiển thị trạng thái
+  /// 🪧 Container hiển thị trạng thái
   Widget _statusContainer(String text, Color color) {
     return Container(
       width: double.infinity,
